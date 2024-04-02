@@ -1,0 +1,29 @@
+/*
+    An simple TM language
+*/
+
+Table: states*=State;
+
+Suffix: ';';
+Assignment: '=';
+Seperator: ',';
+
+StateID: name=/\w+/;
+StateValue: INT|'_'; // default case for value is _
+StateMove: 'left'|'right'|'none'|'print';
+
+// comments
+Comment: /\/\/.*$/;
+
+// state-id value-of-tape = write-value-to-tape, move-pointer, go-to-state
+State:
+  state_id=[StateID]
+  value=StateValue 
+  Assignment 
+  write_value=StateValue 
+  Seperator 
+  move=StateMove 
+  Seperator 
+  next_state=[StateID]
+  Suffix
+;
