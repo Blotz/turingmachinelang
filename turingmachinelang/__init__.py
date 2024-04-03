@@ -17,6 +17,13 @@ def state_id_definer_scope(state_id, attr, attr_ref):
             continue
         return s.state_id
     
+    for s in m.states:
+        if s.next_state is None:
+            continue
+        if s.next_state.name != name:
+            continue
+        return s.next_state
+    
     mm = get_metamodel(m)  # else, create it and store it in the model
     state_id = mm["StateID"]()
     state_id.name = name
@@ -34,7 +41,6 @@ def next_state_definer_scope(state_id, attr, attr_ref):
             continue
         return s.state_id
     
-    # state must be halt at this point
     for s in m.states:
         if s.next_state is None:
             continue
